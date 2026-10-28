@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemesanan Toko Baju - Semi Retro</title>
+    
+    <!-- Memanggil Font Google bergaya Semi-Retro (Fraunces) & Modern (Plus Jakarta Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Memanggil Ikon Font Awesome 4.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* =========================================================
+           1. PENGATURAN DASAR & VARIABEL WARNA (LIGHT MODE DEFAULT)
+           ========================================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Menyembunyikan kotak centang asli untuk saklar Dark Mode */
+        #theme-toggle {
+            display: none;
+        }
+
+        /* Variabel warna untuk Mode Terang (Light Mode - Warna Santai/Warm) */
+        .page-wrapper {
+            --bg-page: #F4EFE6;          /* Krem hangat santai */
+            --bg-card: #FFFDF9;          /* Putih gading lembut */
+            --bg-input: #FFFFFF;         /* Putih bersih untuk input */
+            --text-main: #2C302E;        /* Abu-abu arang tua (nyaman di mata) */
+            --text-muted: #6E7571;       /* Abu-abu lembut */
+            --accent-primary: #D96B43;   /* Oranye Terakota Retro */
+            --accent-secondary: #4A7C59; /* Hijau Sage Santai */
+            --accent-highlight: #F3E5AB; /* Kuning Mentega Lembut */
+            --border-color: #2C302E;     /* Warna garis tepi tegas khas retro */
+            --shadow-color: #2C302E;     /* Warna bayangan timbul */
+            
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            padding: 36px 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* =========================================================
+           2. PENGATURAN WARNA MODE GELAP (DARK MODE)
+           Aktif ketika #theme-toggle dicentang (:checked)
+           ========================================================= */
+        #theme-toggle:checked ~ .page-wrapper {
+            --bg-page: #1E242B;          /* Biru malam redup */
+            --bg-card: #283038;          /* Abu-abu kebiruan gelap */
+            --bg-input: #1E242B;         /* Gelap untuk kolom input */
+            --text-main: #EAE6DF;        /* Krem terang nyaman dibaca */
+            --text-muted: #A3ACA6;       /* Abu-abu terang */
+            --accent-primary: #E88D67;   /* Oranye pastel hangat */
+            --accent-secondary: #68A378; /* Hijau mint lembut */
+            --accent-highlight: #394552; /* Sorotan gelap saat dipilih */
+            --border-color: #111518;     /* Garis tepi hitam pekat */
+            --shadow-color: #111518;     /* Bayangan hitam pekat */
+        }
+
+        /* =========================================================
+           3. TOMBOL SAKLAR LIGHT / DARK MODE
+           ========================================================= */
+        .top-bar {
+            max-width: 780px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            background-color: var(--accent-highlight);
+            border: 2px solid var(--border-color);
+            box-shadow: 3px 3px 0px var(--shadow-color);
+            padding: 8px 14px;
+            border-radius: 30px;
+        }
+
+        .theme-switch-btn {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            box-shadow: 4px 4px 0px var(--shadow-color);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            user-select: none;
+        }
+
+        .theme-switch-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--shadow-color);
+        }
+
+        .theme-switch-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--shadow-color);
+        }
+
+        /* Mengatur teks dan ikon yang tampil saat mode terang vs gelap */
+        .dark-text { display: inline; }
+        .light-text { display: none; }
+        
+        #theme-toggle:checked ~ .page-wrapper .dark-text { display: none; }
+        #theme-toggle:checked ~ .page-wrapper .light-text { display: inline; color: #FFD166; }
+
+        /* =========================================================
+           4. KOTAK UTAMA FORM (KARTU SEMI-RETRO)
+           ========================================================= */
+        .retro-container {
+            max-width: 780px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 8px 8px 0px var(--shadow-color);
+            overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Bagian Kepala Form (Header) */
+        .retro-header {
+            background-color: var(--accent-secondary);
+            color: #FFFDF9;
+            padding: 28px 30px;
+            text-align: center;
+            border-bottom: 3px solid var(--border-color);
+            position: relative;
+        }
+
+        .retro-badge {
+            display: inline-block;
+            background-color: var(--accent-primary);
+            color: #FFF;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 10px;
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .retro-header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            text-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .retro-header p {
+            font-size: 0.95rem;
+            opacity: 0.92;
+        }
+
+        /* =========================================================
+           5. TATA LETAK BARIS & KOLOM INPUT
+           ========================================================= */
+        .form-body {
+            padding: 35px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            align-items: flex-start;
+        }
+
+        .form-label {
+            width: 32%;
+            padding-right: 20px;
+            padding-top: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-label i {
+            color: var(--accent-primary);
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .form-control-area {
+            width: 68%;
+        }
+
+        /* Garis pemisah antar bagian agar rapi */
+        .section-divider {
+            border: 0;
+            border-top: 2px dashed var(--border-color);
+            opacity: 0.25;
+            margin: 28px 0;
+        }
+
+        /* =========================================================
+           6. DESAIN INPUT TEKS, DROPDOWN (SELECT), DAN TEXTAREA
+           ========================================================= */
+        .input-group-retro {
+            display: flex;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--bg-input);
+            box-shadow: 4px 4px 0px var(--shadow-color);
+            overflow: hidden;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        /* Efek timbul ketika kolom sedang diketik (fokus) */
+        .input-group-retro:focus-within {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--accent-primary);
+        }
+
+        .input-icon {
+            background-color: var(--accent-highlight);
+            color: var(--text-main);
+            padding: 12px 16px;
+            border-right: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .input-field,
+        .select-field,
+        .textarea-field {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            color: var(--text-main);
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        /* Khusus Select & Textarea yang berdiri sendiri */
+        .standalone-box {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--bg-input);
+            box-shadow: 4px 4px 0px var(--shadow-color);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .standalone-box:focus {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--accent-primary);
+        }
+
+        .select-field {
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .select-field option {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        /* =========================================================
+           7. DESAIN RADIO BUTTON & CHECKBOX GAYA TOMBOL RETRO
+           ========================================================= */
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Sembunyikan bulatan/kotak bawaan browser */
+        .option-card input[type="radio"],
+        .option-card input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Buat label terlihat seperti tombol kartu yang keren */
+        .option-card label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 3px 3px 0px var(--shadow-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .option-card label:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px var(--shadow-color);
+        }
+
+        /* Ketika dipilih (:checked), ubah warna kartu dan beri efek ditekan */
+        .option-card input:checked + label {
+            background-color: var(--accent-primary);
+            color: #FFFFFF;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--shadow-color);
+        }
+
+        /* Ukuran khusus untuk tombol S, M, L, XL agar kotak simetris */
+        .size-card label {
+            min-width: 58px;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           8. TOMBOL SUBMIT POWERFUL
+           ========================================================= */
+        .submit-btn {
+            background-color: var(--accent-primary);
+            color: #FFFFFF;
+            font-family: 'Fraunces', serif;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            padding: 14px 32px;
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 5px 5px 0px var(--shadow-color);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.15s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent-secondary);
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px var(--shadow-color);
+        }
+
+        .submit-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0px var(--shadow-color);
+        }
+
+        /* =========================================================
+           9. RESPONSIF UNTUK LAYAR HP (MOBILE FRIENDLY)
+           ========================================================= */
+        @media (max-width: 650px) {
+            .form-label, 
+            .form-control-area {
+                width: 100%;
+            }
+            .form-label {
+                margin-bottom: 8px;
+                padding-top: 0;
+            }
+            .form-body {
+                padding: 22px;
+            }
+            .retro-header h1 {
+                font-size: 1.5rem;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+                text-align: center;
+            }
+            .brand-pill, .theme-switch-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SAKLAR UTAMA MODE GELAP/TERANG (Murni CSS dengan Checkbox Hack) -->
+    <input type="checkbox" id="theme-toggle">
+
+    <!-- PEMBUNGKUS HALAMAN -->
+    <div class="page-wrapper">
+        
+        <!-- Baris Atas: Label Toko & Tombol Toggle Light / Dark Mode -->
+        <div class="top-bar">
+            <div class="brand-pill">
+                <i class="fa fa-tags"></i> Koleksi Katalog 2026
+            </div>
+            <label for="theme-toggle" class="theme-switch-btn" title="Klik untuk mengganti mode warna">
+                <span class="dark-text"><i class="fa fa-moon-o"></i> Mode Gelap</span>
+                <span class="light-text"><i class="fa fa-sun-o"></i> Mode Terang</span>
+            </label>
+        </div>
+
+        <!-- KARTU FORM UTAMA -->
+        <div class="retro-container">
+            
+            <!-- Judul Form -->
+            <div class="retro-header">
+                <span class="retro-badge"><i class="fa fa-star"></i> Official Merch Store</span>
+                <h1>FORM PEMESANAN TOKO BAJU</h1>
+                <p>Lengkapi detail pesananmu di bawah ini dengan santai & mudah</p>
+            </div>
+
+            <!-- Isi Form (onsubmit="return false;" menjaga halaman preview tidak blank saat diklik) -->
+            <form class="form-body" action="#" method="POST" onsubmit="return false;">
+                
+                <!-- 1. INPUT NAMA -->
+                <div class="form-row">
+                    <label for="nama" class="form-label">
+                        <i class="fa fa-user"></i> Nama Lengkap
+                    </label>
+                    <div class="form-control-area">
+                        <div class="input-group-retro">
+                            <div class="input-icon">
+                                <i class="fa fa-address-book"></i>
+                            </div>
+                            <input id="nama" name="nama" type="text" class="input-field" placeholder="Masukkan nama lengkapmu..." required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. INPUT NO. HP -->
+                <div class="form-row">
+                    <label for="nohp" class="form-label">
+                        <i class="fa fa-phone"></i> No. HP / WhatsApp
+                    </label>
+                    <div class="form-control-area">
+                        <div class="input-group-retro">
+                            <div class="input-icon">
+                                <i class="fa fa-whatsapp"></i>
+                            </div>
+                            <input id="nohp" name="nohp" type="tel" class="input-field" placeholder="Contoh: 081234567890" required>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- 3. PILIHAN UKURAN (UK) -->
+                <div class="form-row">
+                    <label class="form-label">
+                        <i class="fa fa-arrows-alt"></i> Ukuran Baju (UK)
+                    </label>
+                    <div class="form-control-area">
+                        <div class="options-grid">
+                            <div class="option-card size-card">
+                                <input name="ukuran" id="uk_s" type="radio" value="S">
+                                <label for="uk_s">S</label>
+                            </div>
+                            <div class="option-card size-card">
+                                <input name="ukuran" id="uk_m" type="radio" value="M">
+                                <label for="uk_m">M</label>
+                            </div>
+                            <div class="option-card size-card">
+                                <input name="ukuran" id="uk_l" type="radio" value="L">
+                                <label for="uk_l">L</label>
+                            </div>
+                            <div class="option-card size-card">
+                                <input name="ukuran" id="uk_xl" type="radio" value="XL" checked>
+                                <label for="uk_xl">XL</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. DETAIL PRODUK -->
+                <div class="form-row">
+                    <label for="produk" class="form-label">
+                        <i class="fa fa-shopping-bag"></i> Detail Produk
+                    </label>
+                    <div class="form-control-area">
+                        <select id="produk" name="produk" class="select-field standalone-box">
+                            <option value="kaos_polos">👕 Kaos Polos — Rp 70.000</option>
+                            <option value="kemeja">👔 Kemeja — Rp 150.000</option>
+                            <option value="hoodie">🧥 Hoodie — Rp 190.000</option>
+                            <option value="batik">✨ Batik — Rp 120.000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 5. PAKET TAMBAHAN (OPSIONAL) -->
+                <div class="form-row">
+                    <label class="form-label">
+                        <i class="fa fa-gift"></i> Paket Tambahan
+                    </label>
+                    <div class="form-control-area">
+                        <div class="options-grid">
+                            <div class="option-card">
+                                <input name="tambahan" id="add_sablon" type="checkbox" value="sablon">
+                                <label for="add_sablon"><i class="fa fa-paint-brush"></i> Sablon Custom</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="tambahan" id="add_kotak" type="checkbox" value="kotak_eksklusif" checked>
+                                <label for="add_kotak"><i class="fa fa-cube"></i> Kotak Kemasan Eksklusif</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="tambahan" id="add_garansi" type="checkbox" value="garansi_tukar">
+                                <label for="add_garansi"><i class="fa fa-refresh"></i> Garansi Tukar Ukuran</label>
+                            </div>
+                            <!-- Opsi ke-4 yang sudah diperbarui menjadi Kartu Ucapan & Stiker -->
+                            <div class="option-card">
+                                <input name="tambahan" id="add_kartu" type="checkbox" value="kartu_ucapan_stiker">
+                                <label for="add_kartu"><i class="fa fa-envelope-open-o"></i> Kartu Ucapan & Stiker</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- 6. METODE PEMBAYARAN -->
+                <div class="form-row">
+                    <label class="form-label">
+                        <i class="fa fa-credit-card"></i> Metode Pembayaran
+                    </label>
+                    <div class="form-control-area">
+                        <div class="options-grid">
+                            <div class="option-card">
+                                <input name="pembayaran" id="pay_bank" type="radio" value="transfer_bank" checked>
+                                <label for="pay_bank"><i class="fa fa-university"></i> Transfer Bank (BCA/Mandiri/BRI)</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="pembayaran" id="pay_ewallet" type="radio" value="dompet_digital">
+                                <label for="pay_ewallet"><i class="fa fa-mobile"></i> Dompet Digital (GoPay/OVO/DANA)</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="pembayaran" id="pay_cod" type="radio" value="cod">
+                                <label for="pay_cod"><i class="fa fa-handshake-o"></i> COD (Bayar di Tempat)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. JASA PENGIRIMAN -->
+                <div class="form-row">
+                    <label class="form-label">
+                        <i class="fa fa-truck"></i> Jasa Pengiriman
+                    </label>
+                    <div class="form-control-area">
+                        <div class="options-grid">
+                            <div class="option-card">
+                                <input name="pengiriman" id="ship_reguler" type="radio" value="reguler">
+                                <label for="ship_reguler"><i class="fa fa-archive"></i> Reguler (J&T, SiCepat)</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="pengiriman" id="ship_kilat" type="radio" value="kilat" checked>
+                                <label for="ship_kilat"><i class="fa fa-bolt"></i> Kilat (Instant, Same Day)</label>
+                            </div>
+                            <div class="option-card">
+                                <input name="pengiriman" id="ship_kargo" type="radio" value="kargo">
+                                <label for="ship_kargo"><i class="fa fa-cubes"></i> Kargo (Jumlah Besar)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- 8. CATATAN -->
+                <div class="form-row">
+                    <label for="catatan" class="form-label">
+                        <i class="fa fa-sticky-note-o"></i> Catatan Pesanan
+                    </label>
+                    <div class="form-control-area">
+                        <textarea id="catatan" name="catatan" rows="3" class="textarea-field standalone-box" placeholder="Contoh: Warna hitam, tulis ucapan selamat ulang tahun di kartu..."></textarea>
+                    </div>
+                </div>
+
+                <!-- 9. ALAMAT -->
+                <div class="form-row">
+                    <label for="alamat" class="form-label">
+                        <i class="fa fa-map-marker"></i> Alamat Lengkap
+                    </label>
+                    <div class="form-control-area">
+                        <textarea id="alamat" name="alamat" rows="4" class="textarea-field standalone-box" placeholder="Tuliskan Nama Jalan, RT/RW, Kelurahan, Kecamatan, dan Kode Pos..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- 10. TOMBOL SUBMIT -->
+                <div class="form-row" style="margin-bottom: 0; margin-top: 30px;">
+                    <div class="form-label"></div>
+                    <div class="form-control-area">
+                        <button name="submit" type="submit" class="submit-btn">
+                            <i class="fa fa-paper-plane"></i> Buat Pesanan Sekarang
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
