@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fariz — Eksplorasi Media & Layout</title>
+    <link rel="icon" type="image/x-icon" href="assets/logo2.ico">
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+ 
+    <style>
+        /* =========================================
+           1. PALET RETRO 70-AN
+           Ganti warna di sini untuk mengubah suasana.
+           ========================================= */
+        :root {
+            --bg: #F6E6C2;       /* krem hangat */
+            --ray: rgba(242, 140, 40, .16);  /* sinar matahari di latar */
+            --teks: #3B2314;     /* cokelat tua */
+            --cokelat: #3B2314;
+            --krem: #FFF4DA;
+            --bata: #C8452B;
+            --jingga: #F28C28;
+            --kuning: #F2B632;
+            --tosca: #1F7A70;
+            --tosca-muda: #6FD3C3;
+        }
+        [data-theme="dark"] {
+            --bg: #2B1A24;
+            --ray: rgba(242, 182, 50, .09);
+            --teks: #FFF4DA;
+        }
+ 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+ 
+        body {
+            position: relative;
+            padding: 56px 24px 72px;
+            background: var(--bg);
+            color: var(--teks);
+            font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color .3s ease;
+        }
+        /* sinar matahari yang memudar ke bawah */
+        body::before {
+            content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0; height: 720px;
+            background: repeating-conic-gradient(from 0deg at 50% 0, var(--ray) 0 7deg, transparent 7deg 14deg);
+            -webkit-mask-image: linear-gradient(#000, transparent); mask-image: linear-gradient(#000, transparent);
+        }
+        .halaman { max-width: 920px; margin: 0 auto; }
+ 
+        /* garis belang 4 warna dipakai di banyak tempat */
+        .belang, .progres {
+            background: linear-gradient(var(--bata) 0 25%, var(--jingga) 25% 50%, var(--kuning) 50% 75%, var(--tosca) 75%);
+        }
+        .progres { position: fixed; top: 0; left: 0; z-index: 50; height: 10px; width: 0; }
+        .belang { height: 16px; }
+ 
+        .tombol-melayang {
+            position: fixed; right: 18px; z-index: 40; width: 46px; height: 46px; border-radius: 50%;
+            border: 3px solid var(--cokelat); background: var(--kuning); color: var(--cokelat);
+            font-size: 20px; cursor: pointer; transition: transform .2s ease, opacity .3s ease;
+        }
+        .tombol-melayang:hover { transform: rotate(15deg) scale(1.08); }
+        .tombol-melayang:focus-visible, .foto-profil:focus-visible { outline: 3px solid var(--bata); outline-offset: 3px; }
+        #tema { top: 22px; }
+        #keAtas { bottom: 20px; background: var(--jingga); opacity: 0; pointer-events: none; }
+        #keAtas.tampil { opacity: 1; pointer-events: auto; }
+ 
+        /* =========================================
+           2. HERO — matahari pelangi + judul bertumpuk
+           ========================================= */
+        .header-utama { text-align: center; margin-bottom: 44px; }
+ 
+        .matahari {
+            width: min(340px, 70vw); aspect-ratio: 2 / 1; margin: 0 auto 4px;
+            border-radius: 999px 999px 0 0;
+            background: radial-gradient(circle farthest-side at 50% 100%,
+                var(--kuning) 0 20%, var(--jingga) 20% 40%, var(--bata) 40% 60%, var(--tosca) 60% 80%, var(--cokelat) 80% 100%);
+            animation: terbit 1s cubic-bezier(.2,.8,.2,1) both;
+        }
+        @keyframes terbit { from { opacity: 0; translate: 0 40px; } }
+ 
+        .stiker {
+            display: inline-block; margin: 14px 0 6px; padding: 5px 18px;
+            background: var(--bata); color: var(--krem);
+            font-size: 13px; font-weight: 700;
+            border: 3px solid var(--cokelat); border-radius: 999px;
+        }
+ 
+        h1 {
+            font-family: "Shrikhand", cursive; font-weight: 400;
+            font-size: clamp(42px, 10vw, 92px); line-height: 1.05; margin: 4px 0 18px;
+            color: var(--krem);
+            -webkit-text-stroke: 2px var(--cokelat); paint-order: stroke fill;
+            text-shadow: 3px 3px 0 var(--kuning), 6px 6px 0 var(--jingga), 9px 9px 0 var(--bata);
+            animation: masuk .8s .15s cubic-bezier(.2,.8,.2,1) both;
+        }
+        @keyframes masuk { from { opacity: 0; translate: 0 24px; } }
+ 
+        .mengetik { font-size: clamp(16px, 3vw, 21px); font-weight: 600; min-height: 1.8em; }
+        .mengetik .kata { padding: 2px 10px; background: var(--kuning); color: var(--cokelat); border-radius: 8px; }
+        .kursor { display: inline-block; width: 3px; height: 1.1em; margin-left: 3px; vertical-align: -3px; background: var(--teks); animation: kedip 1s steps(1) infinite; }
+        @keyframes kedip { 50% { opacity: 0; } }
+ 
+        /* =========================================
+           3. PITA BERJALAN
+           ========================================= */
+        .pita { margin: 0 -24px 48px; background: var(--cokelat); overflow: hidden; }
+        .pita .isi { padding: 12px 0; overflow: hidden; }
+        .jalur { display: flex; gap: 32px; width: max-content; animation: jalan 30s linear infinite; }
+        .pita:hover .jalur { animation-play-state: paused; }
+        .jalur span { font-family: "Shrikhand", cursive; font-size: 22px; white-space: nowrap; color: var(--kuning); }
+        .jalur span:nth-child(3n+2) { color: var(--jingga); }
+        .jalur span:nth-child(3n) { color: var(--tosca-muda); }
+        @keyframes jalan { to { transform: translateX(-50%); } }
+ 
+        /* =========================================
+           4. KOTAK — warna tiap kotak berbeda
+           ========================================= */
+        .grid-media { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+        .lebar-penuh { grid-column: span 2; }
+ 
+        .kotak-layout {
+            --c: var(--tosca); --t: var(--krem); --s1: var(--kuning); --s2: var(--jingga); --s3: var(--bata);
+            display: flex; flex-direction: column;
+            background: var(--c); color: var(--t);
+            border: 4px solid var(--cokelat); border-radius: 30px; padding: 26px;
+            box-shadow: 0 8px 0 rgba(59, 35, 20, .35);
+            transition: translate .25s ease, box-shadow .25s ease, opacity .6s ease;
+        }
+        .kotak-layout::after { /* garis belang di dasar kotak */
+            content: ""; display: block; height: 14px; margin-top: 22px; border-radius: 99px;
+            background: linear-gradient(var(--s1) 0 33.3%, var(--s2) 33.3% 66.6%, var(--s3) 0);
+        }
+        .kotak-layout.teal   { --c: var(--tosca); --t: var(--krem); }
+        .kotak-layout.mustard{ --c: var(--kuning); --t: var(--cokelat); --s1: var(--jingga); --s2: var(--bata); --s3: var(--tosca); }
+        .kotak-layout.brick  { --c: var(--bata); --t: var(--krem); --s1: var(--kuning); --s2: var(--jingga); --s3: var(--tosca-muda); }
+        .kotak-layout.orange { --c: var(--jingga); --t: var(--cokelat); --s1: var(--bata); --s2: var(--kuning); --s3: var(--tosca); }
+ 
+        .reveal { opacity: 0; translate: 0 28px; }
+        .reveal.terlihat { opacity: 1; translate: 0 0; }
+        .reveal.terlihat:hover { translate: 0 -5px; box-shadow: 0 13px 0 rgba(59, 35, 20, .35); }
+ 
+        .info-kotak { margin-bottom: 18px; }
+        .judul-kotak { font-family: "Shrikhand", cursive; font-weight: 400; font-size: 24px; line-height: 1.2; margin-bottom: 4px; }
+        .deskripsi-kotak { font-size: 14px; font-weight: 500; }
+ 
+        /* =========================================
+           5. MEDIA
+           ========================================= */
+        /* foto berbingkai lengkung seperti jendela retro */
+        .bingkai-foto { position: relative; overflow: hidden; border: 4px solid var(--cokelat); border-radius: 999px 999px 20px 20px; background: var(--krem); }
+        .foto-profil { display: block; width: 100%; height: 300px; object-fit: cover; cursor: zoom-in; transition: transform .6s ease; }
+        .bingkai-foto:hover .foto-profil { transform: scale(1.06); }
+        .petunjuk {
+            position: absolute; left: 50%; bottom: 10px; translate: -50% 0; padding: 3px 12px; border-radius: 999px; white-space: nowrap;
+            background: var(--cokelat); color: var(--krem); font-size: 12px; font-weight: 600; pointer-events: none;
+        }
+ 
+        .pembungkus-audio {
+            background: var(--krem); color: var(--cokelat); border: 4px solid var(--cokelat); border-radius: 22px; height: 300px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px; text-align: center;
+        }
+        .piringan {
+            width: 92px; height: 92px; border-radius: 50%; position: relative; border: 3px solid var(--cokelat);
+            background: repeating-radial-gradient(circle, #4A2C1B 0 3px, #2A170C 3px 6px);
+            animation: putar 3s linear infinite; animation-play-state: paused;
+        }
+        .piringan::after { content: ""; position: absolute; inset: 28px; border-radius: 50%; background: radial-gradient(var(--cokelat) 0 12%, var(--bata) 12% 55%, var(--kuning) 55%); border: 2px solid var(--cokelat); }
+        .main .piringan { animation-play-state: running; }
+        @keyframes putar { to { transform: rotate(360deg); } }
+ 
+        .equalizer { display: flex; align-items: flex-end; gap: 4px; height: 24px; }
+        .equalizer span { width: 7px; height: 5px; border-radius: 3px; background: var(--bata); }
+        .equalizer span:nth-child(2n) { background: var(--tosca); }
+        .equalizer span:nth-child(3n) { background: var(--jingga); }
+        .main .equalizer span { animation: naik .8s ease-in-out infinite alternate; }
+        .main .equalizer span:nth-child(2) { animation-delay: .15s; }
+        .main .equalizer span:nth-child(3) { animation-delay: .3s; }
+        .main .equalizer span:nth-child(4) { animation-delay: .1s; }
+        .main .equalizer span:nth-child(5) { animation-delay: .25s; }
+        @keyframes naik { to { height: 24px; } }
+ 
+        .teks-audio { font-size: 13px; font-weight: 600; }
+        audio { display: block; width: 100%; }
+ 
+        /* video dibingkai seperti TV jadul lengkap dengan antena */
+        .tv { position: relative; margin-top: 34px; padding: 14px; background: #7A4A2A; border: 4px solid var(--cokelat); border-radius: 26px; }
+        .tv::before, .tv::after { content: ""; position: absolute; bottom: 100%; left: 50%; width: 4px; height: 44px; background: var(--cokelat); border-radius: 4px; transform-origin: bottom center; }
+        .tv::before { transform: rotate(-28deg); }
+        .tv::after { transform: rotate(28deg); }
+        video { display: block; width: 100%; max-height: 460px; border-radius: 16px; background: #000; }
+ 
+        iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 4px solid var(--cokelat); border-radius: 22px; background: var(--cokelat); }
+ 
+        dialog { border: 0; background: transparent; margin: auto; max-width: 92vw; max-height: 92vh; }
+        dialog::backdrop { background: rgba(43, 26, 36, .9); }
+        dialog img { display: block; max-width: 92vw; max-height: 88vh; border: 4px solid var(--krem); border-radius: 22px; cursor: zoom-out; }
+ 
+        /* =========================================
+           6. FOOTER
+           ========================================= */
+        footer { margin-top: 56px; text-align: center; font-size: 14px; font-weight: 600; }
+        footer .belang { max-width: 220px; margin: 0 auto 16px; border-radius: 99px; }
+        .hati { display: inline-block; animation: detak 1.4s ease-in-out infinite; }
+        @keyframes detak { 50% { transform: scale(1.3); } }
+ 
+        /* =========================================
+           7. RESPONSIF & AKSESIBILITAS
+           ========================================= */
+        @media (max-width: 768px) {
+            body { padding: 48px 16px 60px; }
+            .pita { margin-inline: -16px; }
+            .grid-media { grid-template-columns: 1fr; }
+            .lebar-penuh { grid-column: span 1; }
+            .kotak-layout { padding: 20px; }
+            .pembungkus-audio { height: auto; padding: 28px 16px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal { opacity: 1; translate: 0 0; }
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="progres" id="progres"></div>
+    <button class="tombol-melayang" id="tema" aria-label="Ganti tema terang/gelap">🌙</button>
+    <button class="tombol-melayang" id="keAtas" aria-label="Kembali ke atas">↑</button>
+ 
+    <main class="halaman">
+ 
+        <header class="header-utama">
+            <div class="matahari" aria-hidden="true"></div>
+            <span class="stiker">✦ Portofolio Kreatif ✦</span>
+            <h1>Halo, saya Fariz</h1>
+            <p class="mengetik">Saya seorang <span class="kata" id="kata"></span><span class="kursor"></span></p>
+        </header>
+ 
+        <div class="pita" aria-hidden="true">
+            <div class="belang"></div>
+            <div class="isi">
+                <div class="jalur">
+                    <span>Fotografi ★</span><span>Musik ★</span><span>Sinematografi ★</span><span>Tontonan ★</span><span>Desain ★</span><span>Web ★</span>
+                    <span>Fotografi ★</span><span>Musik ★</span><span>Sinematografi ★</span><span>Tontonan ★</span><span>Desain ★</span><span>Web ★</span>
+                </div>
+            </div>
+            <div class="belang"></div>
+        </div>
+ 
+        <div class="grid-media">
+ 
+            <section class="kotak-layout teal reveal">
+                <div class="info-kotak">
+                    <h2 class="judul-kotak">Potret Fariz Anak Sholeh</h2>
+                    <p class="deskripsi-kotak">Representasi visual dan identitas personal.</p>
+                </div>
+                <div class="bingkai-foto">
+                    <img src="assets/IMG_1483.JPEG" alt="Potret Fariz" class="foto-profil" id="foto" tabindex="0">
+                    <span class="petunjuk">🔍 Klik untuk memperbesar</span>
+                </div>
+            </section>
+ 
+            <section class="kotak-layout mustard reveal" id="kotakMusik">
+                <div class="info-kotak">
+                    <h2 class="judul-kotak">Favorit Music</h2>
+                    <p class="deskripsi-kotak">Musik terbaik sepanjang sejarah</p>
+                </div>
+                <div class="pembungkus-audio">
+                    <div class="piringan"></div>
+                    <div class="equalizer" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+                    <p class="teks-audio" id="statusAudio">Putar audio untuk menikmati suasana</p>
+                    <audio controls loop id="audio">
+                        <source src="assets/Kahitna - Mantan Terindah (Official Lyric Video).mp3" type="audio/mpeg">
+                        Browser kamu tidak mendukung pemutar audio ini.
+                    </audio>
+                </div>
+            </section>
+ 
+            <section class="kotak-layout brick lebar-penuh reveal">
+                <div class="info-kotak">
+                    <h2 class="judul-kotak">Galeri Sinematik</h2>
+                    <p class="deskripsi-kotak">Dokumentasi video pilihan dari koleksi penyimpanan lokal.</p>
+                </div>
+                <div class="tv">
+                    <video controls loop>
+                        <source src="assets/Vid.mov" type="video/mp4">
+                        Browser kamu tidak mendukung pemutar video ini.
+                    </video>
+                </div>
+            </section>
+ 
+            <section class="kotak-layout orange lebar-penuh reveal">
+                <div class="info-kotak">
+                    <h2 class="judul-kotak">Tayangan Favorit</h2>
+                    <p class="deskripsi-kotak">Tontonan kesayangan fariz.</p>
+                </div>
+                <iframe src="https://www.youtube.com/embed/-njeff6UeyQ?si=SM3GjIbqClDUIwME"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen loading="lazy">
+                </iframe>
+            </section>
+ 
+        </div>
+ 
+        <footer>
+            <div class="belang"></div>
+            <p>&copy; 2026 Fariz. <span class="hati"></span></p>
+        </footer>
+ 
+    </main>
+ 
+    <dialog id="lightbox"><img id="fotoBesar" alt="Potret Fariz diperbesar"></dialog>
+ 
+    <script>
+        /* 1. Teks mengetik bergantian */
+        const kata = ["pencinta musik", "penikmat film", "software engginer", "pemburu momen"];
+        const elKata = document.getElementById("kata");
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            elKata.textContent = kata[0];
+        } else {
+            let i = 0, j = 0, hapus = false;
+            (function ketik() {
+                const k = kata[i];
+                elKata.textContent = k.slice(0, j);
+                if (!hapus && j === k.length) { hapus = true; return setTimeout(ketik, 1400); }
+                if (hapus && j === 0) { hapus = false; i = (i + 1) % kata.length; }
+                j += hapus ? -1 : 1;
+                setTimeout(ketik, hapus ? 45 : 90);
+            })();
+        }
+ 
+        /* 2. Tema terang/gelap */
+        const root = document.documentElement, tombolTema = document.getElementById("tema");
+        let simpan = null;
+        try { simpan = localStorage.getItem("tema"); } catch (e) {}
+        function setTema(t) { root.dataset.theme = t; tombolTema.textContent = t === "dark" ? "☀️" : "🌙"; }
+        setTema(simpan || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+        tombolTema.onclick = () => {
+            const t = root.dataset.theme === "dark" ? "light" : "dark";
+            setTema(t);
+            try { localStorage.setItem("tema", t); } catch (e) {}
+        };
+ 
+        /* 3. Progres scroll & tombol kembali ke atas */
+        const progres = document.getElementById("progres"), keAtas = document.getElementById("keAtas");
+        function onScroll() {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            progres.style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+            keAtas.classList.toggle("tampil", scrollY > 500);
+        }
+        addEventListener("scroll", onScroll, { passive: true }); onScroll();
+        keAtas.onclick = () => scrollTo({ top: 0 });
+ 
+        /* 4. Kotak muncul saat di-scroll */
+        const io = new IntersectionObserver((es) => es.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add("terlihat"); io.unobserve(e.target); }
+        }), { threshold: 0.12 });
+        document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+ 
+        /* 5. Piringan & equalizer ikut lagu */
+        const audio = document.getElementById("audio"), kotakMusik = document.getElementById("kotakMusik"), status = document.getElementById("statusAudio");
+        audio.addEventListener("play", () => { kotakMusik.classList.add("main"); status.textContent = "Sedang diputar… 🎶"; });
+        ["pause", "ended"].forEach(ev => audio.addEventListener(ev, () => { kotakMusik.classList.remove("main"); status.textContent = "Dijeda. Putar lagi kapan saja"; }));
+ 
+        /* 6. Lightbox foto */
+        const foto = document.getElementById("foto"), box = document.getElementById("lightbox"), besar = document.getElementById("fotoBesar");
+        const buka = () => { besar.src = foto.src; box.showModal(); };
+        foto.onclick = buka;
+        foto.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); buka(); } };
+        box.onclick = () => box.close();
+    </script>
+</body>
+</html>
