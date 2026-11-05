@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.move-box {
+  width: 100px;
+  height: 100px;
+  background-color: cadetblue;
+  margin: 40px auto;
+  position: relative;
+  border-radius: 200px;
+
+  animation: slide 5s infinite alternate ease-in-out;
+}
+
+
+@keyframes slide {
+  0% {
+    left: 600px;                 
+    background-color: lightblue; 
+  }
+  100% {
+    left: -600px;
+    background-color: darkblue;
+  }
+}
+    .kotak {
+  width: 12500x;
+  max-width: 12500px;        
+  box-sizing: border-box;
+   background-color: #1e293b; 
+  padding: 12px 16px;               
+  border: 2px solid #334155; 
+}
+    .fade-text {
+      display: inline-block;
+      color: lightblue;               
+      font-size: 20px;              
+      font-family: sans-serif;
+      font-weight: bold;
+      animation: jalanKeKiri 8s linear infinite;
+    }
+
+    @keyframes jalanKeKiri {
+      0% {
+        transform: translateX(100vw);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    </style>
+</head>
+<body>
+    <div class="move-box"></div>
+    <div class="kotak">
+     <div class="fade-text"> FARIZ ANAK BAIK, RAJIN SHOLAT, DAN MENGAJI
+
+     </div>
+    </div>
+</body>
+</html>
