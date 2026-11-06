@@ -115,19 +115,19 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
 <div id="bar"></div>
 <canvas id="bg"></canvas><canvas id="fx"></canvas>
 <div id="hang"><svg viewBox="0 0 24 24"><use href="#spider"/></svg></div>
-
+ 
 <div id="gate">
  <svg class="w" viewBox="0 0 24 24"><use href="#web"/></svg>
  <h1>FARIZ ARDIANSYAH</h1>
  <button id="enter">Masuk</button>
  <p>Klik untuk masuk dengan musik</p>
 </div>
-
+ 
 <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
 <div id="music">
  <button id="tog">♪ Musik: mati</button>
 </div>
-
+ 
 <header class="hero">
  <div class="wrap">
   <div>
@@ -154,14 +154,14 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
  </div>
  <div class="scroll">SCROLL ↓</div>
 </header>
-
+ 
 <div class="mq"><div><span>With great power comes great responsibility</span><span>◆ Web Developer</span><span>◆ Problem Solver</span><span>◆ Team Player</span><span>With great power comes great responsibility</span><span>◆ Web Developer</span><span>◆ Problem Solver</span><span>◆ Team Player</span></div></div>
-
+ 
 <main class="wrap">
  <section class="rv"><h2><em>01</em>Profil</h2>
   <p style="color:var(--muted);font-size:17px">Mahasantri Software Development di Pesantren PeTIK dengan spesialisasi Web Development. Menguasai fondasi <b style="color:var(--text)">HTML, CSS, logika Python,</b> serta version control <b style="color:var(--text)">Git/GitHub</b>. Terbiasa membangun antarmuka web yang responsif dan terstruktur. Disiplin dan solid dalam tim, terbukti lewat prestasi akademik maupun olahraga. Terbuka untuk magang, proyek kolaborasi, dan posisi Junior Web Developer.</p>
  </section>
-
+ 
  <section class="rv"><h2><em>02</em>Keahlian</h2>
   <div class="grid">
    <div class="card"><h3>Teknis (level belajar)</h3>
@@ -177,7 +177,7 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
    </div>
   </div>
  </section>
-
+ 
  <section class="rv"><h2><em>03</em>Proyek</h2>
   <div class="card"><h3>Biodata Santri — Web Form Data Collection</h3>
    <div class="meta">HTML5 · CSS3</div>
@@ -185,7 +185,7 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
    <a class="btn" href="https://github.com/Farizzzz12/Gen_V/blob/main/Tugas3_Fariz/Form1.html" target="_blank" rel="noopener">Lihat repositori →</a><a class="btn" href="https://github.com/Farizzzz12/Gen_V" target="_blank" rel="noopener">Portofolio →</a>
   </div>
  </section>
-
+ 
  <section class="rv"><h2><em>04</em>Pendidikan</h2>
   <div class="tl">
    <div class="card"><h3>Pesantren Teknologi Informasi dan Komunikasi (PeTIK)</h3><div class="meta">Depok, Jawa Barat · Sep 2026 – Sekarang</div>
@@ -194,14 +194,14 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
     <ul><li>Lulus dengan catatan prestasi akademik dan olahraga.</li></ul></div>
   </div>
  </section>
-
+ 
  <section class="rv"><h2><em>05</em>Prestasi</h2>
   <div class="grid">
    <div class="card"><h3>Akademik</h3><ul><li>Peringkat 1 Kelas 12 Semester 1, MAS Ummul Quro Al-Islami</li></ul></div>
    <div class="card"><h3>Futsal</h3><ul><li>Juara 1 Bogor Student Cup</li><li>Juara 1 Turnamen Class Meeting</li><li>Juara 2 Extra Time Cup</li></ul></div>
   </div>
  </section>
-
+ 
  <section class="rv"><h2><em>06</em>Target</h2>
   <ul><li>Membuat website yang lebih interaktif dengan JavaScript.</li><li>Mendalami database dan sistem backend (alur data server).</li><li>Menyelesaikan proyek website utuh untuk portofolio.</li></ul>
  </section>
@@ -223,7 +223,7 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
  </section>
 </main>
 <footer>© 2026 Fariz Ardiansyah · Your friendly neighborhood developer 🕷️</footer>
-
+ 
 <script>
 (function(){
  var a=document.getElementById('bgm'),g=document.getElementById('gate'),m=document.getElementById('music'),t=document.getElementById('tog');
@@ -231,26 +231,26 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
  function play(){a.play().then(lb).catch(lb)}a.addEventListener('play',lb);a.addEventListener('pause',lb);
  document.getElementById('enter').onclick=function(){g.classList.add('off');play();start()};
  t.onclick=function(){a.paused?play():a.pause()};
-
+ 
  // typing
  var rl=['Junior Software Developer','Aspiring Full-Stack Web Developer','Your Friendly Neighborhood Coder'],ri=0,ci=0,del=false,ty=document.getElementById('ty');
  function type(){var w=rl[ri];ty.textContent=w.slice(0,ci);if(!del&&ci<w.length){ci++;setTimeout(type,70)}else if(!del){del=true;setTimeout(type,1500)}else if(ci>0){ci--;setTimeout(type,30)}else{del=false;ri=(ri+1)%rl.length;setTimeout(type,300)}}
-
+ 
  var started=false;
  function start(){if(started)return;started=true;type();
   document.querySelectorAll('[data-n]').forEach(function(e){var n=+e.dataset.n,k=0,iv=setInterval(function(){e.textContent=++k;if(k>=n)clearInterval(iv)},300)})}
-
+ 
  // reveal + skill bars
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');e.target.querySelectorAll('[data-w]').forEach(function(b){b.style.width=b.dataset.w+'%'});io.unobserve(e.target)}})},{threshold:.15});
  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
-
+ 
  // progress + tilt
  var bar=document.getElementById('bar');
  addEventListener('scroll',function(){bar.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%'},{passive:true});
  document.querySelectorAll('.card').forEach(function(c){
   c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(700px) rotateY('+x*6+'deg) rotateX('+-y*6+'deg)'});
   c.addEventListener('mouseleave',function(){c.style.transform=''})});
-
+ 
  // canvases
  var bg=document.getElementById('bg'),b=bg.getContext('2d'),c=document.getElementById('fx'),x=c.getContext('2d'),W,H,mx=-999,my=-999,pts=[],ns=[],bursts=[];
  function rs(){var d=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;[bg,c].forEach(function(k){k.width=W*d;k.height=H*d});b.setTransform(d,0,0,d,0,0);x.setTransform(d,0,0,d,0,0);
