@@ -8,7 +8,10 @@
 <style>
 :root{--bg:#07070c;--surface:#101019;--text:#ecebf0;--muted:#9a9aab;--red:#e62429;--blue:#2c4fb3;--line:rgba(255,255,255,.09);--icon:rgba(230,36,41,.6);--web:236,235,240;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f3f7;--surface:#fff;--text:#15151c;--muted:#5d5d6e;--line:rgba(0,0,0,.1);--web:60,60,90;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f4f3f7;--surface:#fff;--text:#15151c;--muted:#5d5d6e;--line:rgba(0,0,0,.1);--web:60,60,90;color-scheme:light}
+:root[data-theme="light"] .photo .in::after{background:linear-gradient(transparent 75%,rgba(244,243,247,.35))}
+:root[data-theme="light"] #gate h1{color:var(--text)}
+@media (prefers-color-scheme:light){:root:not([data-theme]){--bg:#f4f3f7;--surface:#fff;--text:#15151c;--muted:#5d5d6e;--line:rgba(0,0,0,.1);--web:60,60,90;color-scheme:light}}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{background:var(--bg);color:var(--text);font:400 16px/1.7 Inter,system-ui,sans-serif;overflow-x:hidden;
@@ -125,6 +128,7 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
 
 <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
 <div id="music">
+ <button id="th" aria-label="Ganti mode tampilan">☀ Mode terang</button>
  <button id="tog">♪ Musik: mati</button>
 </div>
 
@@ -188,7 +192,7 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
 
  <section class="rv"><h2><em>04</em>Pendidikan</h2>
   <div class="tl">
-   <div class="card"><h3>Pesantren Teknologi Informasi dan Komunikasi (PeTIK)</h3><div class="meta">Depok, Jawa Barat · Sep 2026 – Sekarang</div>
+   <div class="card"><h3>Pesantren Teknologi Informasi dan Komunikasi (PeTIK)</h3><div class="meta">Jombang, Jawa Timur · Sep 2026 – Sekarang</div>
     <ul><li>Spesialisasi Software &amp; Web Development.</li><li>Fokus: arsitektur web modern, algoritma, frontend, dasar backend dan database.</li></ul></div>
    <div class="card"><h3>MAS Ummul Quro Al-Islami</h3><div class="meta">Bogor, Jawa Barat · Jul 2023 – Mei 2026</div>
     <ul><li>Lulus dengan catatan prestasi akademik dan olahraga.</li></ul></div>
@@ -231,6 +235,14 @@ footer{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;positi
  function play(){a.play().then(lb).catch(lb)}a.addEventListener('play',lb);a.addEventListener('pause',lb);
  document.getElementById('enter').onclick=function(){g.classList.add('off');play();start()};
  t.onclick=function(){a.paused?play():a.pause()};
+
+ // tema terang / gelap
+ var root=document.documentElement,th=document.getElementById('th'),st=null;
+ function cur(){return root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark')}
+ function setT(v,save){root.setAttribute('data-theme',v);th.textContent=v==='dark'?'☀ Mode terang':'☾ Mode gelap';rgb=getComputedStyle(root).getPropertyValue('--web').trim()||'236,235,240';if(save){try{localStorage.setItem('fariz-theme',v)}catch(e){}}}
+ try{st=localStorage.getItem('fariz-theme')}catch(e){}
+ th.onclick=function(){setT(cur()==='dark'?'light':'dark',true)};
+ setT(st||cur(),false);
 
  // typing
  var rl=['Junior Software Developer','Aspiring Full-Stack Web Developer','Your Friendly Neighborhood Coder'],ri=0,ci=0,del=false,ty=document.getElementById('ty');
