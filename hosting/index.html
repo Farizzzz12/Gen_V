@@ -1,9 +1,9 @@
-<!DOCTYPE html> 
-<html lang="id"> 
+<!DOCTYPE html> <!-- Menandakan dokumen ini memakai HTML5 -->
+<html lang="id"> <!-- Elemen akar; lang="id" memberi tahu browser bahasanya Indonesia -->
 <head> <!-- Berisi pengaturan halaman yang tidak tampil langsung -->
 <meta charset="UTF-8"> <!-- Encoding UTF-8 agar semua huruf tampil benar -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> <!-- Membuat halaman pas di layar HP dan memakai area penuh -->
-<title>Fariz | Web Developer</title> <!-- Judul yang tampil di tab browser -->
+<title>Fariz | Web Developer — Spider-Verse</title> <!-- Judul yang tampil di tab browser -->
 <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Mempercepat koneksi ke Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"> <!-- Memuat font Plus Jakarta Sans -->
 <script>document.documentElement.classList.add('js')</script> <!-- Menandai bahwa JavaScript aktif, agar animasi muncul hanya jika JS jalan -->
@@ -134,6 +134,120 @@ footer{padding:28px 0 36px; color:var(--muted); font-size:.85rem} /* Bagian kaki
   .hero{padding-top:44px} section{padding:44px 0} /* Jarak atas lebih rapat di HP */
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important; transition:none!important; scroll-behavior:auto!important} .in{opacity:1; transform:none} .js .rv{opacity:1; transform:none}} /* Mematikan animasi bagi pengguna yang memilih gerakan minimal */
+
+/* ================= SPIDER-VERSE REDESIGN ================= */
+:root{
+  --bg:#080d18; --paper:#101a2c; --soft:#172943; --ink:#f4f7ff;
+  --muted:#aab8cf; --line:#263d5d; --accent:#ef2937; --on-accent:#fff;
+  --leaf:#102d54; --mint:#173b66;
+  --shadow:0 22px 60px -24px rgba(0,0,0,.72),0 0 28px rgba(239,41,55,.10);
+}
+:root[data-theme="light"]{
+  --bg:#edf3fb; --paper:#fff; --soft:#e2ebf7; --ink:#101d32;
+  --muted:#53657e; --line:#cbd8e9; --accent:#d91f32; --on-accent:#fff;
+  --leaf:#d7e6f8; --mint:#dceafa;
+  --shadow:0 18px 44px -24px rgba(17,42,77,.30);
+}
+:root[data-theme="dark"]{
+  --bg:#080d18; --paper:#101a2c; --soft:#172943; --ink:#f4f7ff;
+  --muted:#aab8cf; --line:#263d5d; --accent:#ef2937; --on-accent:#fff;
+  --leaf:#102d54; --mint:#173b66;
+  --shadow:0 22px 60px -24px rgba(0,0,0,.72),0 0 28px rgba(239,41,55,.10);
+}
+body{
+  background:
+    radial-gradient(ellipse at 85% 8%,rgba(20,91,165,.22),transparent 34%),
+    radial-gradient(ellipse at 8% 42%,rgba(239,41,55,.10),transparent 32%),
+    var(--bg);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.12;
+  background-image:
+    repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg 14deg,rgba(110,166,226,.32) 14.2deg 14.6deg,transparent 14.8deg 30deg),
+    radial-gradient(circle at 50% 50%,transparent 0 54px,rgba(110,166,226,.24) 55px 56px,transparent 57px 110px,rgba(110,166,226,.20) 111px 112px,transparent 113px 166px);
+  background-size:430px 430px; background-position:calc(100% + 210px) -210px;
+  mask-image:linear-gradient(135deg,#000,transparent 62%);
+}
+#bar{background:linear-gradient(90deg,#ef2937,#267bd0,#ef2937); box-shadow:0 0 14px rgba(239,41,55,.65)}
+.glow{filter:blur(95px); opacity:.34}
+.g1{background:#176bc0}.g2{background:#d91f32}
+.topbar{
+  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));
+}
+.logo{letter-spacing:-.06em}
+.logo span{color:#ef2937;text-shadow:0 0 16px rgba(239,41,55,.5)}
+.links a:hover{background:var(--soft);color:var(--ink);box-shadow:inset 0 -2px #ef2937}
+.ibtn{background:var(--paper);border-color:var(--line)}
+.ibtn:hover{border-color:#ef2937;box-shadow:0 0 18px rgba(239,41,55,.18)}
+.hero{padding-top:88px}
+.pill{background:color-mix(in srgb,var(--paper) 82%,#145da5);border-color:color-mix(in srgb,var(--accent) 32%,var(--line));color:var(--ink)}
+.live{background:#ef2937}
+h1{letter-spacing:-.075em;text-shadow:0 8px 32px rgba(0,0,0,.16)}
+h1 em{
+  background:linear-gradient(100deg,#ff3444 5%,#ff5962 42%,#398fe8 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 5px 18px rgba(239,41,55,.18));
+}
+.role{color:#56a5f5}
+.tag{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.tag:hover{background:#145da5;border-color:#398fe8;color:#fff}
+.btn{border-radius:13px}
+.btn.main{background:linear-gradient(115deg,#e62429,#b91528 58%,#155ca8);border-color:#e62429;box-shadow:0 10px 26px rgba(230,36,41,.22)}
+.btn.main:hover{box-shadow:0 14px 32px rgba(230,36,41,.32)}
+.btn:not(.main):hover{border-color:#398fe8}
+.profile{
+  background:linear-gradient(145deg,var(--paper),color-mix(in srgb,var(--paper) 78%,#145da5));
+  border-color:color-mix(in srgb,#398fe8 42%,var(--line));
+  box-shadow:0 26px 70px -28px rgba(0,0,0,.78),0 0 0 1px rgba(239,41,55,.08);
+}
+.art{
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,255,255,.08),transparent 35%),
+    linear-gradient(140deg,#09264a,#123e70 48%,#9c1428);
+}
+.art::before,.art::after{border-color:rgba(255,255,255,.24)}
+.chip{background:#101a2c;color:#fff;border:1px solid rgba(255,255,255,.18)}
+.status{background:rgba(37,130,213,.18);color:#62b1ff;border:1px solid rgba(65,153,232,.3)}
+.kicker{color:#ef4955}
+.card{
+  background:linear-gradient(145deg,var(--paper),color-mix(in srgb,var(--paper) 94%,#145da5));
+  border-color:var(--line);box-shadow:0 12px 32px -26px rgba(0,0,0,.55);
+}
+.card:hover{border-color:#398fe8;box-shadow:0 18px 42px -26px rgba(20,93,165,.45)}
+.ico{background:linear-gradient(145deg,var(--soft),color-mix(in srgb,var(--soft) 70%,#145da5));color:#68aef2}
+.track{background:color-mix(in srgb,var(--soft) 78%,#000)}
+.fill{background:linear-gradient(90deg,#e62429,#f04b55 52%,#398fe8)}
+.banner{
+  color:#fff;background:
+    radial-gradient(circle at 85% 15%,rgba(255,255,255,.15),transparent 32%),
+    linear-gradient(145deg,#a9162a,#e62429 48%,#124d8b);
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.banner::after{
+  content:"";position:absolute;width:190px;height:190px;right:-65px;top:-70px;
+  border:1px solid rgba(255,255,255,.28);border-radius:50%;
+  box-shadow:0 0 0 18px rgba(255,255,255,.035),0 0 0 38px rgba(255,255,255,.025);
+}
+.timeline{border-color:color-mix(in srgb,#398fe8 42%,var(--line))}
+.t-item::before{background:#ef2937;box-shadow:0 0 0 4px color-mix(in srgb,var(--paper) 80%,transparent),0 0 14px rgba(239,41,55,.4)}
+.date,.link{color:#ef4955}
+.project{border-top-color:#e62429}
+.contact{
+  background:
+    radial-gradient(circle at 90% 0%,rgba(56,143,232,.18),transparent 38%),
+    linear-gradient(115deg,color-mix(in srgb,var(--soft) 88%,#a9162a),var(--soft));
+  border-color:color-mix(in srgb,#398fe8 32%,var(--line));
+}
+.contact .btn.main{background:linear-gradient(110deg,#e62429,#145da5);border-color:transparent}
+.foot{border-color:var(--line)}
+@media(max-width:620px){
+  .hero{padding-top:48px}
+  body::after{opacity:.07;background-size:300px 300px}
+}
+@media(prefers-reduced-motion:reduce){body::after{display:none}}
+/* ================= END SPIDER-VERSE REDESIGN ================= */
+
 </style> <!-- Akhir blok CSS -->
 </head> <!-- Akhir bagian head -->
 <body> <!-- Awal isi halaman yang terlihat -->
@@ -153,7 +267,7 @@ footer{padding:28px 0 36px; color:var(--muted); font-size:.85rem} /* Bagian kaki
 <header class="hero" id="home"><div class="wrap hero-grid"> <!-- Bagian pembuka dengan dua kolom -->
 <div> <!-- Kolom kiri berisi teks -->
 <div class="pill in"><span class="live"></span>Pelajar Web Development · PeTIK</div> <!-- Label status singkat -->
-<h1 class="in">Membangun web<br>yang <em>bermakna.</em></h1> <!-- Judul utama halaman -->
+<h1 class="in">Great power.<br><em>Great websites.</em></h1> <!-- Judul utama halaman -->
 <div class="role in" id="role" aria-label="Calon Full-Stack Web Developer"></div> <!-- Tempat teks peran diketik oleh JavaScript -->
 <p class="lead in">Halo, saya Fariz Ardiansyah. Saya sedang membangun fondasi sebagai Full-Stack Developer dan suka membuat website yang mudah digunakan, responsif, dan menjawab kebutuhan nyata.</p> <!-- Perkenalan singkat -->
 <div class="tags in"><span class="tag">HTML &amp; CSS</span><span class="tag">Python</span><span class="tag">Git &amp; GitHub</span></div> <!-- Label teknologi utama -->
@@ -248,8 +362,8 @@ else{let w=0,c=0,del=false; /* w: kata ke-berapa, c: jumlah huruf tampil, del: s
     if(!del&&c===t.length){del=true; d=1600} /* Selesai mengetik: tunggu sebentar lalu mulai menghapus */
     else if(del&&c===0){del=false; w=(w+1)%words.length; d=300} /* Selesai menghapus: lanjut ke kata berikutnya */
     setTimeout(tick,d); /* Menjadwalkan huruf berikutnya */
-  })(); 
-}
-</script> 
-</body> 
-</html> 
+  })(); /* Menjalankan fungsi ketik pertama kali */
+} /* Akhir blok animasi mengetik */
+</script> <!-- Akhir JavaScript -->
+</body> <!-- Akhir isi halaman -->
+</html> <!-- Akhir dokumen -->
